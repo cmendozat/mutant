@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 @RestController
 public class MutantController {
+
+    private static final Logger LOG = Logger.getLogger(MutantController.class);
 
     @Autowired
     private MutantService mutantService;
@@ -22,25 +25,38 @@ public class MutantController {
     @PostMapping(value = "/mutant/", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public void isMutant(@RequestBody MutantDto mutantDto, HttpServletResponse response)
     {
+        try {
 
-        boolean isMutant = mutantService.isMutant(mutantDto.getDna());
-        mutantDto.setMutant(isMutant);
+            boolean isMutant = mutantService.isMutant(mutantDto.getDna());
+            mutantDto.setMutant(isMutant);
 
-        if(isMutant)
+            if (isMutant) {
+                response.setStatus(HttpStatus.OK.value());
+            } else {
+
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+            }
+
+            mutantService.saveDna(mutantDto);
+        } catch (Exception e)
         {
-            response.setStatus(HttpStatus.OK.value());
-        } else {
-
             response.setStatus(HttpStatus.FORBIDDEN.value());
+            LOG.error("Error when /mutant service "+ e.getMessage());
         }
-
-        mutantService.saveDna(mutantDto);
     }
 
     @GetMapping(value = "/stats", produces = {MediaType.APPLICATION_JSON_VALUE})
     public StatisticsData getStatistics()
     {
-        return mutantService.getStatistics();
+        try {
+
+            return mutantService.getStatistics();
+
+        } catch (Exception e)
+        {
+            LOG.error("Error when /mutant service "+ e.getMessage());
+            return null;
+        }
     }
 
 }

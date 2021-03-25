@@ -26,8 +26,3 @@ API /stats
 
 Sobre esta api se puede mostrar una pequeña estadística sobre los dna procesados por el servicio /mutant.  Podemos acceder por medio de un navegador web colocando la siguiente url: http://exammercadolibre-env.eba-dh9e9a8d.us-east-2.elasticbeanstalk.com/stats
 
-Base de datos
-url: database-mercadolibre.c32czzpqxz5p.us-east-2.rds.amazonaws.com
-puerto: 3306
-user: root
-password: admin123

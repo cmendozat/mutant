@@ -6,6 +6,12 @@ import static co.com.mercado.libre.exammercadolibre.util.MutantUtil.isSequence;
 
 public class HorizontalMutantProcessor extends MutantProcess {
 
+    public HorizontalMutantProcessor(MutantProcess mutantProcess)
+    {
+        super(mutantProcess);
+
+    }
+
     @Override
     public boolean isMutant(char[][] dna)
     {

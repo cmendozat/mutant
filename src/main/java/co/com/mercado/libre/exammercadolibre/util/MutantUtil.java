@@ -32,6 +32,28 @@ public class MutantUtil {
         return dna[row] [column] == next;
     }
 
+    public static boolean isSequenceVertical(char[][] dna, int column, int row)
+    {
+        char next = getNextVertical(dna,column, row);
+
+        return dna[row] [column] == next;
+    }
+
+    private static char getNextVertical(char[][] dna, int column, int row)
+    {
+
+        int next = row + 1;
+        char charReturn = ' ';
+        int length = dna.length;
+
+        if( next<length)
+        {
+            charReturn =  dna[row+1] [column];
+        }
+
+        return charReturn;
+    }
+
     public static char [] [] loadDnaMatriz(String[] dna)
     {
         int lenght = dna.length;

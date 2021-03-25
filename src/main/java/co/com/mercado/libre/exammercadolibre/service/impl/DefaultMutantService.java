@@ -3,6 +3,7 @@ package co.com.mercado.libre.exammercadolibre.service.impl;
 import co.com.mercado.libre.exammercadolibre.converter.MutantConverter;
 import co.com.mercado.libre.exammercadolibre.data.StatisticsData;
 import co.com.mercado.libre.exammercadolibre.dto.MutantDto;
+import co.com.mercado.libre.exammercadolibre.entity.MutantEntity;
 import co.com.mercado.libre.exammercadolibre.process.MutantProcess;
 import co.com.mercado.libre.exammercadolibre.process.impl.HorizontalMutantProcessor;
 import co.com.mercado.libre.exammercadolibre.process.impl.ObliqueLeftMutantProcessor;
@@ -15,6 +16,8 @@ import co.com.mercado.libre.exammercadolibre.validate.MutantValidate;
 import co.com.mercado.libre.exammercadolibre.validate.impl.DefaultMutantValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DefaultMutantService implements MutantService {
@@ -53,16 +56,45 @@ public class DefaultMutantService implements MutantService {
 
     @Override
     public StatisticsData getStatistics() {
+        List<MutantEntity> mutantEntities = mutantRepository.findAll();
+        return createStaticsData(mutantEntities);
+    }
+
+    private StatisticsData createStaticsData(List<MutantEntity> mutantEntities)
+    {
+        StatisticsData statisticsData = new StatisticsData();
+
+        long countMutantDna = mutantEntities.stream().filter(mutantEntity ->
+                mutantEntity.getIsMutant()).count();
+
+        statisticsData.setCount_mutant_dna(String.valueOf(countMutantDna));
+
+        long countHumanDna = mutantEntities.stream().count();
+
+
+        statisticsData.setCount_human_dna(String.valueOf(countHumanDna));
+
+        statisticsData.setRatio(getRatio(countMutantDna, countHumanDna));
+
+        return statisticsData;
+    }
+
+    private String getRatio(long countMutantDna, long countHumanDna)
+    {
+        if(countHumanDna>0 && countMutantDna>0)
+        {
+            float ratio = (float) countMutantDna / countHumanDna;
+            return String.valueOf(ratio);
+        }
+
         return null;
     }
 
 
     private MutantProcess loadMutantServices()
     {
-        return   new HorizontalMutantProcessor()
-                .checkIsMutantWith(new VerticalMutantProcessor())
-                .checkIsMutantWith(new ObliqueLeftMutantProcessor())
-                .checkIsMutantWith(new ObliqueRightMutantProcessor());
+        return
+                new HorizontalMutantProcessor(new VerticalMutantProcessor(new ObliqueLeftMutantProcessor(new ObliqueRightMutantProcessor(null))));
     }
 
     private MutantValidate lodValidates()

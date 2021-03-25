@@ -46,4 +46,12 @@ public class HorizontalMutantProcessorTest {
 
         assertTrue(horizontalMutantProcessor.isMutant(MutantUtil.loadDnaMatriz(dna)));
     }
+
+    @Test
+    public void isMutantTestShouldReturnTrueWhenDNAisMutantHorizontal3()
+    {
+        String[] dna = {"TTGACT","AACGAC","CCGATG","GCAAGC","CCCCAA","TAGTTC"};
+
+        assertTrue(horizontalMutantProcessor.isMutant(MutantUtil.loadDnaMatriz(dna)));
+    }
 }

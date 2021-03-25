@@ -46,4 +46,12 @@ public class VerticalMutantProcessorTest {
 
         assertTrue(verticalMutantProcessor.isMutant(MutantUtil.loadDnaMatriz(dna)));
     }
+
+    @Test
+    public void isMutantTestShouldReturnTrueWhenDNAisMutantVertical()
+    {
+        String[] dna = {"ATGC","AACT","AGCA","ATAG"};
+
+        assertTrue(verticalMutantProcessor.isMutant(MutantUtil.loadDnaMatriz(dna)));
+    }
 }

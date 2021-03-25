@@ -3,9 +3,15 @@ package co.com.mercado.libre.exammercadolibre.process.impl;
 import co.com.mercado.libre.exammercadolibre.constants.MutantConstants;
 import co.com.mercado.libre.exammercadolibre.process.MutantProcess;
 
-import static co.com.mercado.libre.exammercadolibre.util.MutantUtil.isSequence;
+import static co.com.mercado.libre.exammercadolibre.util.MutantUtil.isSequenceVertical;
 
 public class VerticalMutantProcessor extends MutantProcess {
+
+    public VerticalMutantProcessor(MutantProcess mutantProcess)
+    {
+        super(mutantProcess);
+
+    }
 
     @Override
     public boolean isMutant(char[][] dna)
@@ -18,7 +24,7 @@ public class VerticalMutantProcessor extends MutantProcess {
 
             for(int row = 0; row<length; row++){
 
-                if(isSequence(dna, column, row)){
+                if(isSequenceVertical(dna, column, row)){
                     sequenceCount++;
                 } else {sequenceCount=0;}
 

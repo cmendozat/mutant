@@ -2,7 +2,6 @@ package co.com.mercado.libre.exammercadolibre.service.impl;
 
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

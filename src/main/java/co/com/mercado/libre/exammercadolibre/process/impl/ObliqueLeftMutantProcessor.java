@@ -9,6 +9,12 @@ import java.util.regex.Pattern;
 
 public class ObliqueLeftMutantProcessor extends MutantProcess {
 
+    public ObliqueLeftMutantProcessor(MutantProcess mutantProcess)
+    {
+        super(mutantProcess);
+
+    }
+
     @Override
     public boolean isMutant(char[][] dna)
     {

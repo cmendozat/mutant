@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('gitcheckout') {
       steps {
-        sh 'git checkout master'
+        sh 'git status'
       }
     }
 
